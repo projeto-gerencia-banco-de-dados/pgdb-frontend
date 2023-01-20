@@ -8,19 +8,13 @@ import {
     Avatar,
     Typography,
     FormControl,
+    Button,
 }   
 from '@mui/material';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
 
 const FormUrna = () =>{
-    const [showHide, setShowHide] = useState('');
-
-    const handleShowHide=(event)=>{
-        const getCargo = event.target.value;
-        console.log(getCargo);
-        setShowHide(getCargo);
-    }
 
     return(
         <Container component="main" maxWidth="xs">
@@ -117,12 +111,11 @@ const FormUrna = () =>{
                         />
 
                         <TextField
-                            onChange={(e)=>(handleShowHide(e))}
                             margin="normal"
                             required
                             id="outlined-select-currency"
                             select
-                            label="Cargo"
+                            label="Governador"
                             variant="outlined"
                         >
                             <MenuItem    
@@ -130,195 +123,204 @@ const FormUrna = () =>{
                             >
                                 Governador
                             </MenuItem >
-
-                            <MenuItem 
-                                value="2"
-                            >
-                                Presidente
-                            </MenuItem >
                         </TextField>
                     </Box> 
 
+                    <Box
+                        component="form"
+                        sx={{
+                            '& > :not(style)': { m: 2, width: '25ch' },
+                            display: 'flex',
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                        }}>
+                            <TextField
+                                margin="normal"
+                                required
+                                id="outlined-select-currency"
+                                select
+                                label="Estado"
+                                variant="outlined"
+                            >
+                                <MenuItem
+                                    value="estado"
+                                >
+                                    Estado1
+                                </MenuItem>
+                            </TextField>
 
-
-                    {
-                        showHide==='1' && (
-                            <>
-                                <Box
-                                    component="form"
-                                    sx={{
-                                        '& > :not(style)': { m: 2, width: '25ch' },
-                                        display: 'flex',
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                    }}>
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        id="outlined-select-currency"
-                                        select
-                                        label="Estado"
-                                        variant="outlined"
-                                    >
-                                        <MenuItem
-                                            value="estado"
-                                        >
-                                            Estado1
-                                        </MenuItem>
-                                    </TextField>
-
-                                </Box>
+                        </Box>
                                 
-                                <Box
-                                    component="form"
-                                    sx={{
-                                        '& > :not(style)': { m: 2, width: '25ch' },
-                                        display: 'flex',
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                    }}>
+                        <Box
+                            component="form"
+                            sx={{
+                                '& > :not(style)': { m: 2, width: '25ch' },
+                                display: 'flex',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                            }}>
 
 
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        id="outlined-select-currency"
-                                        select
-                                        label="Candidato1"
-                                        variant="outlined"
+                            <TextField
+                                margin="normal"
+                                required
+                                id="outlined-select-currency"
+                                select
+                                label="Candidato1"
+                                variant="outlined"
+                                >
+                                    <MenuItem
+                                        value="candidato1"
                                     >
-                                        <MenuItem
-                                            value="candidato1"
-                                        >
-                                            Candidato1
-                                        </MenuItem>
-                                    </TextField>
+                                        Candidato1
+                                    </MenuItem>
+                                </TextField>
 
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        id="outlined-number"
-                                        label="Total de Votos"
-                                        type="number"
-                                        variant="outlined"
-                                    />
-                                </Box>
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    id="outlined-number"
+                                    label="Total de Votos"
+                                    type="number"
+                                    variant="outlined"
+                                />
+                            </Box>
 
-                                <Box
-                                    component="form"
-                                    sx={{
-                                        '& > :not(style)': { m: 2, width: '25ch' },
-                                        display: 'flex',
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                    }}>
+                            <Box
+                                component="form"
+                                sx={{
+                                    '& > :not(style)': { m: 2, width: '25ch' },
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                }}>
 
 
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        id="outlined-select-currency"
-                                        select
-                                        label="Candidato2"
-                                        variant="outlined"
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    id="outlined-select-currency"
+                                    select
+                                    label="Candidato2"
+                                    variant="outlined"
+                                >
+                                    <MenuItem
+                                        value="candidato2"
                                     >
-                                        <MenuItem
-                                            value="candidato2"
-                                        >
-                                            Candidato1
-                                        </MenuItem>
-                                    </TextField>
+                                        Candidato1
+                                    </MenuItem>
+                                </TextField>
 
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        id="outlined-number"
-                                        label="Total de Votos"
-                                        type="number"
-                                        variant="outlined"
-                                    />
-                                </Box>
-                            </>
-                        )
-                    } 
-                    
-
-                    {
-                        showHide==='2' && (
-                            <>  
-                                <Box
-                                    component="form"
-                                    sx={{
-                                        '& > :not(style)': { m: 2, width: '25ch' },
-                                        display: 'flex',
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                    }}>
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    id="outlined-number"
+                                    label="Total de Votos"
+                                    type="number"
+                                    variant="outlined"
+                                />
+                            </Box>
 
 
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        id="outlined-select-currency"
-                                        select
-                                        label="Candidato1"
-                                        variant="outlined"
+                            <Box
+                                component="form"
+                                sx={{
+                                    '& > :not(style)': { m: 2, width: '25ch' },
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                }}>
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    id="outlined-select-currency"
+                                    select
+                                    label="Presidente"
+                                    variant="outlined"
+                                >
+                                    <MenuItem
+                                        value="estado"
                                     >
-                                        <MenuItem
-                                            value="candidato1"
-                                        >
-                                            Candidato1
-                                        </MenuItem>
-                                    </TextField>
+                                        Presidente
+                                    </MenuItem>
+                                </TextField>
 
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        id="outlined-number"
-                                        label="Total de Votos"
-                                        type="number"
-                                        variant="outlined"
-                                    />
-                                </Box>
+                            </Box>
 
-                                <Box
-                                    component="form"
-                                    sx={{
-                                        '& > :not(style)': { m: 2, width: '25ch' },
-                                        display: 'flex',
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                    }}>
+                            <Box
+                                component="form"
+                                sx={{
+                                    '& > :not(style)': { m: 2, width: '25ch' },
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                }}>
 
-
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        id="outlined-select-currency"
-                                        select
-                                        label="Candidato2"
-                                        variant="outlined"
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    id="outlined-select-currency"
+                                    select
+                                    label="Candidato1"
+                                    variant="outlined"
+                                >
+                                    <MenuItem
+                                        value="candidato1"
                                     >
-                                        <MenuItem
-                                            value="candidato2"
-                                        >
-                                            Candidato1
-                                        </MenuItem>
-                                    </TextField>
+                                        Candidato1
+                                    </MenuItem>
+                                </TextField>
 
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        id="outlined-number"
-                                        label="Total de Votos"
-                                        type="number"
-                                        variant="outlined"
-                                    />
-                                </Box>
-                            </>
-                        )
-                    } 
-    
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    id="outlined-number"
+                                    label="Total de Votos"
+                                    type="number"
+                                    variant="outlined"
+                                />
+                            </Box>
+
+                            <Box
+                                component="form"
+                                sx={{
+                                    '& > :not(style)': { m: 2, width: '25ch' },
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                }}>
+
+
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    id="outlined-select-currency"
+                                    select
+                                    label="Candidato2"
+                                    variant="outlined"
+                                >
+                                    <MenuItem
+                                        value="candidato2"
+                                    >
+                                        Candidato1
+                                    </MenuItem>
+                                </TextField>
+
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    id="outlined-number"
+                                    label="Total de Votos"
+                                    type="number"
+                                    variant="outlined"
+                                />
+                            </Box>
+                            <Button 
+                                variant="contained"
+                                color="secondary"
+                            >
+                                Enviar
+                            </Button>
                 </FormControl>
             </Box>           
         </Container>           
