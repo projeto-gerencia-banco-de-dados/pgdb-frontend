@@ -24,17 +24,30 @@ export default function ReportFormComponent() {
         {name: "Rio Grande do Sul", uf: 'RS'},
         {name: "São Paulo", uf: 'SP'},
     ]);
-    const [selectedTurn, setSelectedTurn] = useState(null);
-    const [isFirstTurn, setIsFirstTurn] = useState(false);
+    const [presidentOptions, setPresidentOpitions] = useState([
+        {name: "Lula", id: 1},
+        {name: "Bolsonaro", id: 2},
+    ]);
+
+    const [governorOptions, setGovernorOpitions] = useState([
+        {name: "Eduardo Leite", id: 1},
+        {name: "Onyx Lorenzoni", id: 2},
+    ]);
+    const [selectedTurn, setSelectedTurn] = useState({});
+    const [selectedState, setSelectedState] = useState({});
+    const [selectedPresident1, setSelectedPresident1] = useState({});
+    const [selectedPresident2, setSelectedPresident2] = useState({});
+    const [selectedGovernor1, setSelectedGovernor1] = useState({});
+    const [selectedGovernor2, setSelectedGovernor2] = useState({});
 
     const defaultPropsTurn = {
         options: turnOptions,
         value: selectedTurn,
         getOptionLabel: (option) => {
-            return option && option.turn;
+            return option.turn || '';
         },
         getOptionSelected: (option) => {
-            return option && option.turn;
+            return option.turn || '';
         },
         onChange: (event, newValue) => {
             setSelectedTurn(newValue);
@@ -43,15 +56,71 @@ export default function ReportFormComponent() {
 
     const defaultPropsState = {
         options: stateOptions,
-        // value: selectedState,
+        value: selectedState,
         getOptionLabel: (option) => {
-            return option && option.name;
+            return option.name || '';
         },
         getOptionSelected: (option) => {
-            return option && option.name;
+            return option.name || '';
         },
         onChange: (event, newValue) => {
-            setSelectedTurn(newValue);
+            setSelectedState(newValue);
+        },
+    };
+
+    const defaultPropsC1President = {
+        options: presidentOptions,
+        value: selectedPresident1,
+        getOptionLabel: (option) => {
+            return option.name || '';
+        },
+        getOptionSelected: (option) => {
+            return option.name || '';
+        },
+        onChange: (event, newValue) => {
+            setSelectedPresident1(newValue);
+        },
+    };
+
+    const defaultPropsC2President = {
+        options: presidentOptions,
+        value: selectedPresident2,
+        getOptionLabel: (option) => {
+            return option.name || '';
+        },
+        getOptionSelected: (option) => {
+            return option.name || '';
+        },
+        onChange: (event, newValue) => {
+            setSelectedPresident2(newValue);
+        },
+    };
+
+    const defaultPropsC1Gov = {
+        options: governorOptions,
+        value: selectedGovernor1,
+        getOptionLabel: (option) => {
+            return option.name || '';
+        },
+        getOptionSelected: (option) => {
+            return option.name || '';
+        },
+        onChange: (event, newValue) => {
+            setSelectedGovernor1(newValue);
+        },
+    };
+
+    const defaultPropsC2Gov = {
+        options: governorOptions,
+        value: selectedGovernor2,
+        getOptionLabel: (option) => {
+            return option.name || '';
+        },
+        getOptionSelected: (option) => {
+            return option.name || '';
+        },
+        onChange: (event, newValue) => {
+            setSelectedGovernor2(newValue);
         },
     };
     return(
@@ -144,7 +213,6 @@ export default function ReportFormComponent() {
                         <Autocomplete
                             {...defaultPropsTurn}
                             margin="normal"
-                            required
                             id="outlined-select-currency"
                             label="Turno"
                             variant="outlined"
@@ -175,16 +243,15 @@ export default function ReportFormComponent() {
                                     flexDirection: 'row',
                                     alignItems: 'center',
                             }}>
-                                 <Autocomplete
+                                <Autocomplete
                                     {...defaultPropsState}
                                     margin="normal"
-                                    required
                                     id="outlined-select-currency"
                                     variant="outlined"
                                     renderInput={(params) => (
                                         <TextField {...params} variant="outlined" label="Estado"/>
                                     )}
-                        />
+                                />
 
                             </Box>
                                 
@@ -198,20 +265,15 @@ export default function ReportFormComponent() {
                             }}>
 
 
-                                <TextField
+                                <Autocomplete
+                                    {...defaultPropsC1Gov}
                                     margin="normal"
-                                    required
                                     id="outlined-select-currency"
-                                    select
-                                    label="Candidato1"
                                     variant="outlined"
-                                >
-                                    <MenuItem
-                                        value="candidato1"
-                                    >
-                                        Candidato1
-                                    </MenuItem>
-                                </TextField>
+                                    renderInput={(params) => (
+                                        <TextField {...params} variant="outlined" label="Candidato 1"/>
+                                    )}
+                                />
 
                                 <TextField
                                     margin="normal"
@@ -231,20 +293,15 @@ export default function ReportFormComponent() {
                                     flexDirection: 'row',
                                     alignItems: 'center',
                             }}>
-                                <TextField
+                                <Autocomplete
+                                    {...defaultPropsC2Gov}
                                     margin="normal"
-                                    required
                                     id="outlined-select-currency"
-                                    select
-                                    label="Candidato2"
                                     variant="outlined"
-                                >
-                                    <MenuItem
-                                        value="candidato2"
-                                    >
-                                        Candidato1
-                                    </MenuItem>
-                                </TextField>
+                                    renderInput={(params) => (
+                                        <TextField {...params} variant="outlined" label="Candidato 2"/>
+                                    )}
+                                />
 
                                 <TextField
                                     margin="normal"
@@ -277,20 +334,15 @@ export default function ReportFormComponent() {
                                     alignItems: 'center',
                             }}>
 
-                                <TextField
+                                <Autocomplete
+                                    {...defaultPropsC1President}
                                     margin="normal"
-                                    required
                                     id="outlined-select-currency"
-                                    select
-                                    label="Candidato 1"
                                     variant="outlined"
-                                >
-                                    <MenuItem
-                                        value="candidato1"
-                                    >
-                                        Candidato1
-                                    </MenuItem>
-                                </TextField>
+                                    renderInput={(params) => (
+                                        <TextField {...params} variant="outlined" label="Candidato 1"/>
+                                    )}
+                                />
 
                                 <TextField
                                     margin="normal"
@@ -301,40 +353,32 @@ export default function ReportFormComponent() {
                                     variant="outlined"
                                 />
                             </Box>
-
                                 <Box
-                                component="form"
-                                sx={{
+                                    component="form"
+                                    sx={{
                                     '& > :not(style)': { m: 2, width: '25ch' },
                                     display: 'flex',
                                     flexDirection: 'row',
                                     alignItems: 'center',
                                 }}>
+                                    <Autocomplete
+                                        {...defaultPropsC2President}
+                                        margin="normal"
+                                        id="outlined-select-currency"
+                                        variant="outlined"
+                                        renderInput={(params) => (
+                                            <TextField {...params} variant="outlined" label="Candidato 2"/>
+                                        )}
+                                    />
 
-
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    id="outlined-select-currency"
-                                    select
-                                    label="Candidato 2"
-                                    variant="outlined"
-                                >
-                                    <MenuItem
-                                        value="candidato 2"
-                                    >
-                                        Candidato1
-                                    </MenuItem>
-                                </TextField>
-
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    id="outlined-number"
-                                    label="Total de Votos"
-                                    type="number"
-                                    variant="outlined"
-                                />
+                                    <TextField
+                                        margin="normal"
+                                        required
+                                        id="outlined-number"
+                                        label="Total de Votos"
+                                        type="number"
+                                        variant="outlined"
+                                    />
                             </Box>
                         </>
                     :selectedTurn?.value === 1? <></>: <></>}

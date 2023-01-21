@@ -4,6 +4,7 @@ import SignUp from './pages/sign-up/sign-up';
 import ReportForm from './pages/report-form/report-form';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import MyTheme from './MyTheme';
+import CandidateRegister from './pages/candidate-register/candidate-register';
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                     <Route exact path="/login" component={SignIn} />
                     <Route exact path="/sign-up" component={SignUp} />
                     <Route exact path="/report-form" component={ReportForm} />
+                    <Route exact path="/candidate-register" component={CandidateRegister} />
                 </Switch>
             </BrowserRouter>
         </MuiThemeProvider>
