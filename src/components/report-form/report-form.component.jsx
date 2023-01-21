@@ -9,13 +9,51 @@ import {
     Typography,
     FormControl,
     Button,
+    Autocomplete,
 }   
 from '@mui/material';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 
 
-const FormUrna = () =>{
+export default function ReportFormComponent() {
+    const [turnOptions, setTurnOpitions] = useState([
+        {turn: "1º Turno", value: 1},
+        {turn: "2º Turno", value: 2}
+    ]);
+    const [stateOptions, setStateOpitions] = useState([
+        {name: "Rio Grande do Sul", uf: 'RS'},
+        {name: "São Paulo", uf: 'SP'},
+    ]);
+    const [selectedTurn, setSelectedTurn] = useState(null);
+    const [isFirstTurn, setIsFirstTurn] = useState(false);
 
+    const defaultPropsTurn = {
+        options: turnOptions,
+        value: selectedTurn,
+        getOptionLabel: (option) => {
+            return option && option.turn;
+        },
+        getOptionSelected: (option) => {
+            return option && option.turn;
+        },
+        onChange: (event, newValue) => {
+            setSelectedTurn(newValue);
+        },
+    };
+
+    const defaultPropsState = {
+        options: stateOptions,
+        // value: selectedState,
+        getOptionLabel: (option) => {
+            return option && option.name;
+        },
+        getOptionSelected: (option) => {
+            return option && option.name;
+        },
+        onChange: (event, newValue) => {
+            setSelectedTurn(newValue);
+        },
+    };
     return(
         <Container component="main" maxWidth="xs">
             <Box>
@@ -49,7 +87,7 @@ const FormUrna = () =>{
                             margin="normal"
                             required
                             id="outlined-number"
-                            label="Código da Urna"
+                            label="Zona"
                             type="number"
                             variant="outlined"
                         />
@@ -58,7 +96,7 @@ const FormUrna = () =>{
                             margin="normal"
                             required
                             id="outlined-number"
-                            label="Zona"
+                            label="Seção"
                             type="number"
                             variant="outlined"
                         />
@@ -77,7 +115,7 @@ const FormUrna = () =>{
                             margin="normal"
                             required
                             id="outlined-number"
-                            label="Seção"
+                            label="Eleitores Aptos"
                             type="number"
                             variant="outlined"
                         />
@@ -86,7 +124,7 @@ const FormUrna = () =>{
                             margin="normal"
                             required
                             id="outlined-number"
-                            label="Eleitores Aptos"
+                            label="Eleitores Faltosos"
                             type="number"
                             variant="outlined"
                         />
@@ -101,160 +139,64 @@ const FormUrna = () =>{
                         alignItems: 'center',
                         mt: 1, mb: 2
                     }}>
-                        <TextField
-                            margin="normal"
-                            required
-                            id="outlined-number"
-                            label="Eleitores Faltosos"
-                            type="number"
-                            variant="outlined"
-                        />
+                        
 
-                        <TextField
+                        <Autocomplete
+                            {...defaultPropsTurn}
                             margin="normal"
                             required
                             id="outlined-select-currency"
-                            select
-                            label="Governador"
+                            label="Turno"
                             variant="outlined"
-                        >
-                            <MenuItem    
-                                value="1"
-                            >
-                                Governador
-                            </MenuItem >
-                        </TextField>
-                    </Box> 
+                            renderInput={(params) => (
+                                <TextField {...params} variant="outlined" label="Turno"/>
+                            )}
+                        />  
+                    </Box>
+                    {selectedTurn?.value === 2 ? 
+                        <>
+                            <Box
+                                component="form"
+                                sx={{
+                                    '& > :not(style)': { m: 2, width: '25ch' },
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                            }}>
+                                <Typography component="h1" variant="h5" marginBottom={3} fontSize={20}>
+                                    Governador
+                                </Typography>
+                            </Box>
+                            <Box
+                                component="form"
+                                sx={{
+                                    '& > :not(style)': { m: 2, width: '25ch' },
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                            }}>
+                                 <Autocomplete
+                                    {...defaultPropsState}
+                                    margin="normal"
+                                    required
+                                    id="outlined-select-currency"
+                                    variant="outlined"
+                                    renderInput={(params) => (
+                                        <TextField {...params} variant="outlined" label="Estado"/>
+                                    )}
+                        />
 
-                    <Box
-                        component="form"
-                        sx={{
-                            '& > :not(style)': { m: 2, width: '25ch' },
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                        }}>
-                            <TextField
-                                margin="normal"
-                                required
-                                id="outlined-select-currency"
-                                select
-                                label="Estado"
-                                variant="outlined"
-                            >
-                                <MenuItem
-                                    value="estado"
-                                >
-                                    Estado1
-                                </MenuItem>
-                            </TextField>
-
-                        </Box>
+                            </Box>
                                 
-                        <Box
-                            component="form"
-                            sx={{
-                                '& > :not(style)': { m: 2, width: '25ch' },
-                                display: 'flex',
-                                flexDirection: 'row',
-                                alignItems: 'center',
+                            <Box
+                                component="form"
+                                sx={{
+                                    '& > :not(style)': { m: 2, width: '25ch' },
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
                             }}>
 
-
-                            <TextField
-                                margin="normal"
-                                required
-                                id="outlined-select-currency"
-                                select
-                                label="Candidato1"
-                                variant="outlined"
-                                >
-                                    <MenuItem
-                                        value="candidato1"
-                                    >
-                                        Candidato1
-                                    </MenuItem>
-                                </TextField>
-
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    id="outlined-number"
-                                    label="Total de Votos"
-                                    type="number"
-                                    variant="outlined"
-                                />
-                            </Box>
-
-                            <Box
-                                component="form"
-                                sx={{
-                                    '& > :not(style)': { m: 2, width: '25ch' },
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                }}>
-
-
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    id="outlined-select-currency"
-                                    select
-                                    label="Candidato2"
-                                    variant="outlined"
-                                >
-                                    <MenuItem
-                                        value="candidato2"
-                                    >
-                                        Candidato1
-                                    </MenuItem>
-                                </TextField>
-
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    id="outlined-number"
-                                    label="Total de Votos"
-                                    type="number"
-                                    variant="outlined"
-                                />
-                            </Box>
-
-
-                            <Box
-                                component="form"
-                                sx={{
-                                    '& > :not(style)': { m: 2, width: '25ch' },
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                }}>
-                                <TextField
-                                    margin="normal"
-                                    required
-                                    id="outlined-select-currency"
-                                    select
-                                    label="Presidente"
-                                    variant="outlined"
-                                >
-                                    <MenuItem
-                                        value="estado"
-                                    >
-                                        Presidente
-                                    </MenuItem>
-                                </TextField>
-
-                            </Box>
-
-                            <Box
-                                component="form"
-                                sx={{
-                                    '& > :not(style)': { m: 2, width: '25ch' },
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    alignItems: 'center',
-                                }}>
 
                                 <TextField
                                     margin="normal"
@@ -288,9 +230,7 @@ const FormUrna = () =>{
                                     display: 'flex',
                                     flexDirection: 'row',
                                     alignItems: 'center',
-                                }}>
-
-
+                            }}>
                                 <TextField
                                     margin="normal"
                                     required
@@ -315,16 +255,101 @@ const FormUrna = () =>{
                                     variant="outlined"
                                 />
                             </Box>
-                            <Button 
-                                variant="contained"
-                                color="secondary"
-                            >
-                                Enviar
-                            </Button>
+                            <Box
+                                component="form"
+                                sx={{
+                                    '& > :not(style)': { m: 2, width: '25ch' },
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                            }}>
+                                <Typography component="h1" variant="h5" marginBottom={3} fontSize={20}>
+                                    Presidente
+                                </Typography>
+                            </Box>    
+
+                            <Box
+                                component="form"
+                                sx={{
+                                    '& > :not(style)': { m: 2, width: '25ch' },
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                            }}>
+
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    id="outlined-select-currency"
+                                    select
+                                    label="Candidato 1"
+                                    variant="outlined"
+                                >
+                                    <MenuItem
+                                        value="candidato1"
+                                    >
+                                        Candidato1
+                                    </MenuItem>
+                                </TextField>
+
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    id="outlined-number"
+                                    label="Total de Votos"
+                                    type="number"
+                                    variant="outlined"
+                                />
+                            </Box>
+
+                                <Box
+                                component="form"
+                                sx={{
+                                    '& > :not(style)': { m: 2, width: '25ch' },
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                }}>
+
+
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    id="outlined-select-currency"
+                                    select
+                                    label="Candidato 2"
+                                    variant="outlined"
+                                >
+                                    <MenuItem
+                                        value="candidato 2"
+                                    >
+                                        Candidato1
+                                    </MenuItem>
+                                </TextField>
+
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    id="outlined-number"
+                                    label="Total de Votos"
+                                    type="number"
+                                    variant="outlined"
+                                />
+                            </Box>
+                        </>
+                    :selectedTurn?.value === 1? <></>: <></>}
+                    
+                    <Button 
+                        variant="contained"
+                        color="secondary"
+                        sx={{
+                            margin: 4
+                        }}
+                    >
+                        Enviar
+                    </Button>
                 </FormControl>
             </Box>           
         </Container>           
     );
 }
-
-export default FormUrna;
