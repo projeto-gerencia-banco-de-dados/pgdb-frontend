@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -13,10 +12,12 @@ import {
 } from '@mui/material/styles';
 import { Autocomplete } from '@material-ui/lab';
 import { FormControl } from '@mui/material';
+import { authContext } from '../../contexts/authContext';
 
 const theme = createTheme();
 
 export default function CandidateRegisterComponent() {
+    const { auth } = useContext(authContext);
     const [roleOptions, setRoleOptions] = useState([
         { role: 'Presidente'},
         { role: 'Governador'}
@@ -183,14 +184,15 @@ export default function CandidateRegisterComponent() {
                     />
                 </Box>                          
                 <Button 
-                    variant="contained"
-                    color="secondary"
-                    sx={{
-                        margin: 4
-                    }}
-                >
-                    Enviar
-                </Button>
+                        type='submit'
+                        variant="contained"
+                        color="secondary"
+                        sx={{
+                            margin: 1
+                        }}
+                    >
+                        Enviar
+                    </Button>
             </FormControl>
         </Box>           
     </Container>

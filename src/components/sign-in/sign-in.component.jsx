@@ -36,8 +36,7 @@ export default function SignInComponent() {
             const user = await findOneUser(+response.data.sub);
             setAuthData(user.data);
             history.replace('/report-form');
-        }
-        
+        }    
     };
 
     const handleChange = (e) => {

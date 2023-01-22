@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { useContext, useState } from 'react';
 import { authContext } from '../../contexts/authContext';
+import { Link } from 'react-router-dom';
 
 const pages = [
     {label: 'Formulário', href: '/report-form', visible: true}, 
@@ -21,9 +22,16 @@ const pages = [
 ];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
+const linkStyle = {
+  margin: "1.5rem",
+  textDecoration: "none",
+  color: 'white'
+};
+
 export default function HeaderComponent() {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { auth } = useContext(authContext);
+  console.log(auth);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -56,15 +64,6 @@ export default function HeaderComponent() {
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
             <Menu
               id="menu-appbar"
               anchorOrigin={{
@@ -83,7 +82,7 @@ export default function HeaderComponent() {
               <MenuItem key={'Formulário'} href={'/report-form'}>
                   <Typography textAlign="center">{'Formulário'}</Typography>
               </MenuItem>
-              {auth.admin && (
+              {auth.data.admin && (
                 <MenuItem key={'Cadastar Candidato'} href={'/candidate-register'}>
                     <Typography textAlign="center">{'Cadastar Candidato'}</Typography>
                 </MenuItem>
@@ -113,29 +112,34 @@ export default function HeaderComponent() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <Button
-                key={'Formulário'}
-                href={'/report-form'}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-            >
-              {'Formulário'}
-            </Button>
-            {auth.admin && (
-              <Button
-                  key={'Cadastar Candidato'} 
-                  href={'/candidate-register'}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
+            <Link
+                to={'/report-form'}
+                style={linkStyle}
+              >
+                {'Enviar Boletim'}
+              </Link>
+            {auth.data.admin && (
+              <Link
+                to={'/candidate-register'}
+                style={linkStyle}
               >
                 {'Cadastar Candidato'}
-              </Button>
+              </Link>
             )}
-            <Button
-                key={'Apuração'} 
-                href={'/tally-chart'}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+            <Link
+                to={'/tally-chart'}
+                style={linkStyle}
             >
               {'Apuração'}
-            </Button>
+            </Link>
+            {auth.data.admin && (
+              <Link
+                  to={'/report-list'}
+                  style={linkStyle}
+              >
+                {'Validar Boletins'}
+              </Link>
+            )}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
