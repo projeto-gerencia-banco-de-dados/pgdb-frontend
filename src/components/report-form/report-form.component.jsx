@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { 
     TextField,
     MenuItem,
@@ -13,9 +12,12 @@ import {
 }   
 from '@mui/material';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import { authContext } from '../../contexts/authContext';
 
 
 export default function ReportFormComponent() {
+    const { auth } = useContext(authContext);
+    console.log(auth);
     const [turnOptions, setTurnOpitions] = useState([
         {turn: "1º Turno", value: 1},
         {turn: "2º Turno", value: 2}

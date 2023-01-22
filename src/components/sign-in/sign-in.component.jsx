@@ -1,5 +1,4 @@
-import * as React from 'react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,30 +12,38 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-        {'Copyright © '}
-            <Link color="inherit" href="https://mui.com/">
-                Your Website
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+import { findOneUser, login } from '../../api/api';
+import { Alert } from '@mui/material';
+import { useHistory } from 'react-router-dom';
+import { authContext } from '../../contexts/authContext';
 
 const theme = createTheme();
 
 export default function SignInComponent() {
-    const handleSubmit = (event) => {
+    const {setAuthData} = useContext(authContext);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isError, setIsError] = useState(false);
+
+    let history = useHistory();
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        const response = await login(email, password);
+        if(response.error) {
+            setIsError(true);
+        } else {
+            const user = await findOneUser(+response.data.sub);
+            setAuthData(user.data);
+            history.replace('/report-form');
+        }
+        
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        if (name === 'email') setEmail(value);
+        else setPassword(value);
     };
 
     return (
@@ -44,12 +51,12 @@ export default function SignInComponent() {
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box
-                sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
                 >
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                     <LockOutlinedIcon />
@@ -60,36 +67,37 @@ export default function SignInComponent() {
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                     <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email Address"
+                        name="email"
+                        autoComplete="email"
+                        onChange={handleChange}
+                        autoFocus
                     />
                     <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="password"
+                        label="Password"
+                        type="password"
+                        id="password"
+                        onChange={handleChange}
+                        autoComplete="current-password"
                     />
                     <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
+                        control={<Checkbox value="remember" color="primary" />}
+                        label="Remember me"
                     />
 
                     <Button
-                    type="submit"
-                    href="/report-form"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 3, mb: 2 }}
                     >
                         
                     Sign In
@@ -101,9 +109,12 @@ export default function SignInComponent() {
                         </Link>
                     </Grid>
                     </Grid>
+                    
+                    {isError && (
+                        <Alert sx={{mt: 2}} severity="error">Dados Inválidos!</Alert>
+                    )}
                 </Box>
                 </Box>
-                <Copyright sx={{ mt: 8, mb: 4 }} />
             </Container>
         </ThemeProvider>
     );

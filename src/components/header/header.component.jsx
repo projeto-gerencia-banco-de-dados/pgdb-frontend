@@ -1,4 +1,3 @@
-import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,17 +11,19 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { useContext, useState } from 'react';
+import { authContext } from '../../contexts/authContext';
 
 const pages = [
-    {label: 'Formulário', href: '/report-form'}, 
-    {label: 'Cadastar Candidato', href: '/candidate-register'}, 
-    {label: 'Apuração', href: '/tally-chart'}
+    {label: 'Formulário', href: '/report-form', visible: true}, 
+    {label: 'Cadastar Candidato', href: '/candidate-register', visible: true}, 
+    {label: 'Apuração', href: '/tally-chart', visible: true}
 ];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 export default function HeaderComponent() {
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const [anchorElUser, setAnchorElUser] = useState(null);
+  const { auth } = useContext(authContext);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -79,11 +80,17 @@ export default function HeaderComponent() {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page.label} href={page.href}>
-                  <Typography textAlign="center">{page.label}</Typography>
+              <MenuItem key={'Formulário'} href={'/report-form'}>
+                  <Typography textAlign="center">{'Formulário'}</Typography>
+              </MenuItem>
+              {auth.admin && (
+                <MenuItem key={'Cadastar Candidato'} href={'/candidate-register'}>
+                    <Typography textAlign="center">{'Cadastar Candidato'}</Typography>
                 </MenuItem>
-              ))}
+              )}
+              <MenuItem key={'Apuração'} href={'/tally-chart'}>
+                  <Typography textAlign="center">{'Apuração'}</Typography>
+              </MenuItem>
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
@@ -106,15 +113,29 @@ export default function HeaderComponent() {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.label}
-                href={page.href}
+            <Button
+                key={'Formulário'}
+                href={'/report-form'}
                 sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+              {'Formulário'}
+            </Button>
+            {auth.admin && (
+              <Button
+                  key={'Cadastar Candidato'} 
+                  href={'/candidate-register'}
+                  sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page.label}
+                {'Cadastar Candidato'}
               </Button>
-            ))}
+            )}
+            <Button
+                key={'Apuração'} 
+                href={'/tally-chart'}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+            >
+              {'Apuração'}
+            </Button>
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>

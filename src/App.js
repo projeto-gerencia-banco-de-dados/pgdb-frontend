@@ -6,6 +6,7 @@ import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import MyTheme from './MyTheme';
 import CandidateRegister from './pages/candidate-register/candidate-register';
 import TallyChart from './pages/tally-chart/tally-chart';
+import HeaderComponent from './components/header/header.component';
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                     <Route exact path="/report-form" component={ReportForm} />
                     <Route exact path="/candidate-register" component={CandidateRegister} />
                     <Route exact path="/tally-chart" component={TallyChart} />
+                    <Route exact path="/tally-chart" component={HeaderComponent}></Route>
                 </Switch>
             </BrowserRouter>
         </MuiThemeProvider>
