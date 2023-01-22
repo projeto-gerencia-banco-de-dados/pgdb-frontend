@@ -36,3 +36,24 @@ export const findAllCandidatesByUf = async (uf) => {
         };
     }
 };
+
+export const createCandidate = async (name, role, uf, partido, num) => {
+    try {
+        const response = await Axios.post(`${apiUrl}/candidato/cadastrar`, {
+            nome: name,
+            cargo: role,
+            siglaUf: uf,
+            partido: {
+                id: partido.id
+            },
+            numCand: +num
+        });
+        
+        return response;
+    } catch (err) {
+        return {
+            error: true,
+            message: err,
+        };
+    }
+};

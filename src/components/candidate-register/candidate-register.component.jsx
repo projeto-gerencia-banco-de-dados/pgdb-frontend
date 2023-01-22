@@ -11,10 +11,9 @@ import {
     ThemeProvider
 } from '@mui/material/styles';
 import { Autocomplete } from '@material-ui/lab';
-import { FormControl } from '@mui/material';
+import { Alert, FormControl } from '@mui/material';
 import { authContext } from '../../contexts/authContext';
-
-const theme = createTheme();
+import { createCandidate } from '../../api/apiCandidate';
 
 export default function CandidateRegisterComponent() {
     const { auth } = useContext(authContext);
@@ -30,18 +29,39 @@ export default function CandidateRegisterComponent() {
         { sigla: 'PT', id: 1},
         { sigla: 'PL', id: 2}
     ]);
+
+    const [nome, setNome] = useState('');
+    const [numCand, setNumCand] = useState(null);
+    const [isError, setIsError] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
     const [selectedRole, setSelectedRole] = useState({});
     const [selectedState, setSelectedState] = useState({});
     const [selectedParty, setSelectedParty] = useState({});
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email : data.get('email'),
-            password : data.get('password'),
-        });
+        const response = await createCandidate(
+            nome, 
+            selectedRole.role.toUpperCase(), 
+            selectedState?.uf ? selectedState.uf : null, 
+            selectedParty, 
+            numCand);
+        if(response.status !== 201) {
+            setIsError(true);
+        } else {
+            setIsSuccess(true);
+        }
     };
+
+    const handleChangeNome = (e) => {
+        const { value } = e.target;
+        setNome(value);
+    };
+
+    const handleChangeNumCand = (e) => {
+        const { value } = e.target;
+        setNumCand(value);
+    }
 
     const defaultPropsRole = {
         options: roleOptions,
@@ -82,20 +102,20 @@ export default function CandidateRegisterComponent() {
             return option.sigla || '';
         },
         onChange: (event, newValue) => {
-            setSelectedState(newValue);
+            setSelectedParty(newValue);
         },
     };
 
     return (
         <Container component="main" maxWidth="xs">
-        <Box>
+        <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Box 
-            sx={{
-                marginTop: 4,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-            }}
+                sx={{
+                    marginTop: 4,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}
             >
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
                     <AssignmentIcon />
@@ -108,7 +128,6 @@ export default function CandidateRegisterComponent() {
 
             <FormControl fullWidth>
                 <Box            
-                component="form"  
                 sx={{
                     '& > :not(style)': { m: 2, width: '25ch' },
                     display: 'flex',
@@ -123,13 +142,13 @@ export default function CandidateRegisterComponent() {
                             width: '25ch'
                         }}
                         id="firstName"
-                        label="Name"
+                        label="Nome"
+                        onChange={handleChangeNome}
                         autoFocus
                     />
                 </Box>
 
                 <Box            
-                component="form"     
                 sx={{
                     '& > :not(style)': { m: 2, width: '25ch' },
                     display: 'flex',
@@ -150,6 +169,7 @@ export default function CandidateRegisterComponent() {
                         {...defaultPropsState}
                         margin="normal"
                         id="outlined-select-currency"
+                        disabled={selectedRole?.role !== 'Governador' ? true: false}
                         variant="outlined"
                         renderInput={(params) => (
                             <TextField {...params} variant="outlined" label="UF"/>
@@ -157,7 +177,6 @@ export default function CandidateRegisterComponent() {
                     />
                 </Box>
                 <Box            
-                component="form"     
                 sx={{
                     '& > :not(style)': { m: 2, width: '25ch' },
                     display: 'flex',
@@ -181,18 +200,25 @@ export default function CandidateRegisterComponent() {
                         label="Número Candidato"
                         type="number"
                         variant="outlined"
+                        onChange={handleChangeNumCand}
                     />
                 </Box>                          
                 <Button 
-                        type='submit'
-                        variant="contained"
-                        color="secondary"
-                        sx={{
-                            margin: 1
-                        }}
-                    >
-                        Enviar
-                    </Button>
+                    type='submit'
+                    variant="contained"
+                    color="secondary"
+                    sx={{
+                        margin: 1
+                    }}
+                >
+                    Enviar
+                </Button>
+                {isSuccess && (
+                    <Alert sx={{mt: 2}} severity="success">Casdastro realizado com sucesso!</Alert>
+                )}
+                {isError && (
+                    <Alert sx={{mt: 2}} severity="error">Dados Inválidos!</Alert>
+                )}
             </FormControl>
         </Box>           
     </Container>
