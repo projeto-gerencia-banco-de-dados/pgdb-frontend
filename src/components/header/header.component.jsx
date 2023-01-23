@@ -31,7 +31,7 @@ const linkStyle = {
 export default function HeaderComponent() {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { auth } = useContext(authContext);
-  console.log(auth);
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -82,35 +82,15 @@ export default function HeaderComponent() {
               <MenuItem key={'Formulário'} href={'/report-form'}>
                   <Typography textAlign="center">{'Formulário'}</Typography>
               </MenuItem>
-              {auth.data.admin && (
                 <MenuItem key={'Cadastar Candidato'} href={'/candidate-register'}>
                     <Typography textAlign="center">{'Cadastar Candidato'}</Typography>
                 </MenuItem>
-              )}
               <MenuItem key={'Apuração'} href={'/tally-chart'}>
                   <Typography textAlign="center">{'Apuração'}</Typography>
               </MenuItem>
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            LOGO
-          </Typography>
+          
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Link
                 to={'/report-form'}

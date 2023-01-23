@@ -6,10 +6,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import AssignmentIcon from '@mui/icons-material/Assignment';
-import {
-    createTheme,
-    ThemeProvider
-} from '@mui/material/styles';
+
 import { Autocomplete } from '@material-ui/lab';
 import { Alert, FormControl } from '@mui/material';
 import { authContext } from '../../contexts/authContext';
@@ -23,8 +20,33 @@ export default function CandidateRegisterComponent() {
         { role: 'Governador'}
     ]);
     const [stateOptions, setStateOpitions] = useState([
+        {uf: 'AC'},
+        {uf: 'AL'},
+        {uf: 'AP'},
+        {uf: 'AM'},
+        {uf: 'BA'},
+        {uf: 'CE'},
+        {uf: 'DF'},
+        {uf: 'ES'},
+        {uf: 'GO'},
+        {uf: 'MA'},
+        {uf: 'MT'},
+        {uf: 'MS'},
+        {uf: 'MG'},
+        {uf: 'PA'},
+        {uf: 'PB'},
+        {uf: 'PR'},
+        {uf: 'PE'},
+        {uf: 'PI'},
+        {uf: 'RJ'},
+        {uf: 'RN'},
         {uf: 'RS'},
+        {uf: 'RO'},
+        {uf: 'RR'},
+        {uf: 'SC'},
         {uf: 'SP'},
+        {uf: 'SE'},
+        {uf: 'TO'},
     ]);
     const [partyOptions, setPartyOptions] = useState([
         { sigla: 'PT', id: 1},
@@ -121,120 +143,116 @@ export default function CandidateRegisterComponent() {
     };
 
     return (
-        <Container component="main" maxWidth="xs">
-        <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Box 
+    <Container component="main" maxWidth="xs">
+            <Box component="form" onSubmit={handleSubmit}>
+                <Box 
                 sx={{
                     marginTop: 4,
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                 }}
-            >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <AssignmentIcon />
-                </Avatar>
-                
-                <Typography component="h1" variant="h5" marginBottom={3}>
-                    Cadastrar Candidato
-                </Typography>
-            </Box>
-
-            <FormControl fullWidth>
-                <Box            
-                sx={{
-                    '& > :not(style)': { m: 2, width: '25ch' },
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                }}>
-                    <TextField
-                        autoComplete="given-name"
-                        name="firstName"
-                        required
-                        sx={{
-                            width: '25ch'
-                        }}
-                        id="firstName"
-                        label="Nome"
-                        onChange={handleChangeNome}
-                        autoFocus
-                    />
-                </Box>
-
-                <Box            
-                sx={{
-                    '& > :not(style)': { m: 2, width: '25ch' },
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    mt: 1,
-                }}>
-                    <Autocomplete
-                        {...defaultPropsRole}
-                        margin="normal"
-                        id="outlined-select-currency"
-                        variant="outlined"
-                        renderInput={(params) => (
-                            <TextField {...params} variant="outlined" label="Cargo"/>
-                        )}
-                    />
-                    <Autocomplete
-                        {...defaultPropsState}
-                        margin="normal"
-                        id="outlined-select-currency"
-                        disabled={selectedRole?.role !== 'Governador' ? true: false}
-                        variant="outlined"
-                        renderInput={(params) => (
-                            <TextField {...params} variant="outlined" label="UF"/>
-                        )}
-                    />
-                </Box>
-                <Box            
-                sx={{
-                    '& > :not(style)': { m: 2, width: '25ch' },
-                    display: 'flex',
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    mt: 1,
-                }}>
-                    <Autocomplete
-                        {...defaultPropsParty}
-                        margin="normal"
-                        id="outlined-select-currency"
-                        variant="outlined"
-                        renderInput={(params) => (
-                            <TextField {...params} variant="outlined" label="Partido"/>
-                        )}
-                    />
-                    <TextField
-                        margin="normal"
-                        required
-                        id="outlined-number"
-                        label="Número Candidato"
-                        type="number"
-                        variant="outlined"
-                        onChange={handleChangeNumCand}
-                    />
-                </Box>                          
-                <Button 
-                    type='submit'
-                    variant="contained"
-                    color="secondary"
-                    sx={{
-                        margin: 1
-                    }}
                 >
-                    Enviar
-                </Button>
-                {isSuccess && (
-                    <Alert sx={{mt: 2}} severity="success">Casdastro realizado com sucesso!</Alert>
-                )}
-                {isError && (
-                    <Alert sx={{mt: 2}} severity="error">Dados Inválidos!</Alert>
-                )}
-            </FormControl>
-        </Box>           
-    </Container>
+                    <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                        <AssignmentIcon />
+                    </Avatar>
+                    
+                    <Typography component="h1" variant="h5" marginBottom={3}>
+                        Cadastrar Candidato
+                    </Typography>
+                </Box>
+
+                <FormControl fullWidth>
+                    <Box
+                    sx={{
+                        '& > :not(style)': { m: 2, width: '25ch' },
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                    }}>
+                        <TextField
+                            autoComplete="given-name"
+                            name="firstName"
+                            required
+                            fullWidth
+                            id="firstName"
+                            label="Nome"
+                            onChange={handleChangeNome}
+                            autoFocus
+                        />
+                    </Box>
+
+                    <Box            
+                    sx={{
+                        '& > :not(style)': { m: 2, width: '25ch' },
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        mt: 1,
+                    }}>
+                        <Autocomplete
+                            {...defaultPropsRole}
+                            margin="normal"
+                            id="outlined-select-currency"
+                            variant="outlined"
+                            renderInput={(params) => (
+                                <TextField {...params} variant="outlined" label="Cargo"/>
+                            )}
+                        />
+                        <Autocomplete
+                            {...defaultPropsState}
+                            margin="normal"
+                            id="outlined-select-currency"
+                            disabled={selectedRole?.role !== 'Governador' ? true: false}
+                            variant="outlined"
+                            renderInput={(params) => (
+                                <TextField {...params} variant="outlined" label="UF"/>
+                            )}
+                        />
+                    </Box>    
+
+                    <Box            
+                    sx={{
+                        '& > :not(style)': { m: 2, width: '25ch' },
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        mt: 1, mb: 2
+                    }}>
+                        <Autocomplete
+                            {...defaultPropsParty}
+                            margin="normal"
+                            id="outlined-select-currency"
+                            variant="outlined"
+                            renderInput={(params) => (
+                                <TextField {...params} variant="outlined" label="Partido"/>
+                            )}
+                        />
+                        <TextField
+                            margin="normal"
+                            required
+                            id="outlined-number"
+                            label="Número Candidato"
+                            type="number"
+                            variant="outlined"
+                            onChange={handleChangeNumCand}
+                        />
+                    </Box>
+                    <Button 
+                        type='submit'
+                        variant="contained"
+                        color="secondary"
+                        sx={{
+                            margin: 1
+                        }}
+                    >
+                        Enviar
+                    </Button>
+                    {isSuccess && (
+                        <Alert severity="success">Casdastro realizado com sucesso!</Alert>
+                    )}
+                </FormControl>
+            </Box>           
+        </Container>  
     );
 }

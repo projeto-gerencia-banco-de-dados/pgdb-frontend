@@ -23,15 +23,9 @@ export default function ReportListComponent() {
     const [reports, setReports] = useState([]);
     const [callApi, setCallApi] = useState(false);
 
-    const handleValidation = async (id) => {
-        const response = await validateReport(id);
-        let copyArray = [...reports];
-        // copyArray.forEach((report) => {
-        //     if(report.id === id) {
-        //         report.valido = true;
-        //     }
-        // });
-        // setReports(copyArray); 
+    const handleValidation = async (id, zona, secao) => {
+        console.log();
+        const response = await validateReport(id, zona, secao);
         setCallApi(!callApi);
     };
 
@@ -113,7 +107,7 @@ export default function ReportListComponent() {
                         ):(
                         
                         <Button 
-                            onClick={()=> handleValidation(report.id)}
+                            onClick={()=> handleValidation(report.id, report.zona, report.secao)}
                             variant="contained"
                             color="success"
                             sx={{

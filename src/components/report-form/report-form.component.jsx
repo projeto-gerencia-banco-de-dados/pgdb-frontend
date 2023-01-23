@@ -25,8 +25,33 @@ export default function ReportFormComponent() {
         {turn: "2º Turno", value: 2}
     ]);
     const [stateOptions, setStateOpitions] = useState([
+        {uf: 'AC'},
+        {uf: 'AL'},
+        {uf: 'AP'},
+        {uf: 'AM'},
+        {uf: 'BA'},
+        {uf: 'CE'},
+        {uf: 'DF'},
+        {uf: 'ES'},
+        {uf: 'GO'},
+        {uf: 'MA'},
+        {uf: 'MT'},
+        {uf: 'MS'},
+        {uf: 'MG'},
+        {uf: 'PA'},
+        {uf: 'PB'},
+        {uf: 'PR'},
+        {uf: 'PE'},
+        {uf: 'PI'},
+        {uf: 'RJ'},
+        {uf: 'RN'},
         {uf: 'RS'},
+        {uf: 'RO'},
+        {uf: 'RR'},
+        {uf: 'SC'},
         {uf: 'SP'},
+        {uf: 'SE'},
+        {uf: 'TO'},
     ]);
     const [presidentOptions, setPresidentOpitions] = useState([]);
     const [governorOptions, setGovernorOpitions] = useState([]);
@@ -489,8 +514,7 @@ export default function ReportFormComponent() {
                                     />
                             </Box>
                         </>
-                    :selectedTurn?.value === 1? <></>: <></>}
-                    
+                    :selectedTurn?.value === 1? <></>: <></>}   
                     <Button 
                         type='submit'
                         variant="contained"

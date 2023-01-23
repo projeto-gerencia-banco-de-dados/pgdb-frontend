@@ -36,10 +36,12 @@ export const findAllReports = async () => {
     }
 };
 
-export const validateReport = async (id) => {
+export const validateReport = async (id, zona, secao) => {
     try {
         const response = await Axios.post(`${apiUrl}/boletim/validar`, {
-            id: id
+            id: id,
+            zona: zona,
+            secao: secao
         });
         
         return response;
