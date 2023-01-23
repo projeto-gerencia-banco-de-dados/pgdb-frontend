@@ -51,21 +51,19 @@ export default function ReportFormComponent() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const response = await createReport(
-            {
-                zona,
-                secao,
-                aptos,
-                faltosos,
-            },
-            auth.data,
-            [
-                {candidato: {id: selectedPresident1.id}, qtd_votos: votosP1},
-                {candidato: {id: selectedPresident2.id}, qtd_votos: votosP2},
-                {candidato: {id: selectedGovernor1.id}, qtd_votos: votosG1},
-                {candidato: {id: selectedGovernor2.id}, qtd_votos: votosG2}
-            ]
-        );
+        const response = await createReport({
+            zona,
+            secao,
+            aptos,
+            faltosos
+        },
+        auth.data,
+        [
+            {candidato: {id: selectedPresident1.id}, qtd_votos: votosP1},
+            {candidato: {id: selectedPresident2.id}, qtd_votos: votosP2},
+            {candidato: {id: selectedGovernor1.id}, qtd_votos: votosG1},
+            {candidato: {id: selectedGovernor2.id}, qtd_votos: votosG2},
+        ]);
         if(response.status === 201) {
             setIsSuccess(true);
         }
@@ -378,7 +376,7 @@ export default function ReportFormComponent() {
                                 <Autocomplete
                                     {...defaultPropsC1Gov}
                                     margin="normal"
-                                    id="0"
+                                    id="outlined-select-currency"
                                     variant="outlined"
                                     renderInput={(params) => (
                                         <TextField {...params} variant="outlined" label="Candidato 1"/>
@@ -388,7 +386,7 @@ export default function ReportFormComponent() {
                                 <TextField
                                     margin="normal"
                                     required
-                                    id="0"
+                                    id="outlined-number"
                                     label="Total de Votos"
                                     type="number"
                                     onChange={handleChangeVotosG1}
@@ -406,7 +404,7 @@ export default function ReportFormComponent() {
                                 <Autocomplete
                                     {...defaultPropsC2Gov}
                                     margin="normal"
-                                    id="1"
+                                    id="outlined-select-currency"
                                     variant="outlined"
                                     renderInput={(params) => (
                                         <TextField {...params} variant="outlined" label="Candidato 2"/>
@@ -416,7 +414,7 @@ export default function ReportFormComponent() {
                                 <TextField
                                     margin="normal"
                                     required
-                                    id="1"
+                                    id="outlined-number"
                                     label="Total de Votos"
                                     type="number"
                                     onChange={handleChangeVotosG2}
@@ -446,7 +444,7 @@ export default function ReportFormComponent() {
                                 <Autocomplete
                                     {...defaultPropsC1President}
                                     margin="normal"
-                                    id="2"
+                                    id="outlined-select-currency"
                                     variant="outlined"
                                     renderInput={(params) => (
                                         <TextField {...params} variant="outlined" label="Candidato 1"/>
@@ -456,7 +454,7 @@ export default function ReportFormComponent() {
                                 <TextField
                                     margin="normal"
                                     required
-                                    id="2"
+                                    id="outlined-number"
                                     label="Total de Votos"
                                     type="number"
                                     onChange={handleChangeVotosP1}
@@ -473,7 +471,7 @@ export default function ReportFormComponent() {
                                     <Autocomplete
                                         {...defaultPropsC2President}
                                         margin="normal"
-                                        id="3"
+                                        id="outlined-select-currency"
                                         variant="outlined"
                                         renderInput={(params) => (
                                             <TextField {...params} variant="outlined" label="Candidato 2"/>
@@ -483,7 +481,7 @@ export default function ReportFormComponent() {
                                     <TextField
                                         margin="normal"
                                         required
-                                        id="3"
+                                        id="outlined-number"
                                         label="Total de Votos"
                                         type="number"
                                         onChange={handleChangeVotosP2}
