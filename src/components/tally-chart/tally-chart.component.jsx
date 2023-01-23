@@ -1,56 +1,5 @@
 // import React, { PureComponent } from 'react';
 import { useEffect, useState } from 'react';
-// import { PieChart, Pie, Sector, Cell, ResponsiveContainer, Tooltip } from 'recharts';
-
-// const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-
-// const RADIAN = Math.PI / 180;
-// const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-//   const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-//   const x = cx + radius * Math.cos(-midAngle * RADIAN);
-//   const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-//   return (
-//     <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-//       {`${(percent * 100).toFixed(0)}%`}
-//     </text>
-//   );
-// };
-
-// export default function TallyChartComponent () {
-//     const [data, setData] = useState([
-//         { candidate: 'Lula', value: 400 },
-//         { candidate: 'Bolsonaro', value: 300 },
-//     ]);
-//     return (
-//         <>
-//             <PieChart width={400} height={400}>
-//                 <Pie
-//                     data={data}
-//                     cx={80}
-//                     cy={80}
-//                     labelLine={false}
-//                     label={renderCustomizedLabel}
-//                     outerRadius={80}
-//                     fill="#8884d8"
-//                     nameKey="candidate"
-//                     dataKey="value"
-//                 >
-//                     {data.map((curr, index) => (
-//                         <Cell 
-//                             key={`cell-${index}`} 
-//                             fill={
-//                                 curr.name === 'Group A' ? COLORS[0]: COLORS[1]
-//                             } 
-//                         />
-//                     ))}
-//                 </Pie>
-//                 <Tooltip />
-//             </PieChart>
-//         </>
-//     );
-// }
-// import "./styles.css";
 import React from "react";
 import {
   BarChart,
@@ -63,7 +12,7 @@ import {
   LabelList
 } from "recharts";
 import { Container } from '@material-ui/core';
-import { Grid, Typography } from '@mui/material';
+import { Grid, Typography, Autocomplete, TextField } from '@mui/material';
 import { findVotesByGov, findVotesByPresident } from '../../api/apiVotos';
 import { findAllCandidates, findCandidateById } from '../../api/apiCandidate';
 
@@ -74,6 +23,37 @@ export default function TallyChartComponent() {
   ]);
   const [dataGov, setDataGov] = useState([
   ]);
+  const [stateOptions, setStateOpitions] = useState([
+    {uf: 'AC'},
+    {uf: 'AL'},
+    {uf: 'AP'},
+    {uf: 'AM'},
+    {uf: 'BA'},
+    {uf: 'CE'},
+    {uf: 'DF'},
+    {uf: 'ES'},
+    {uf: 'GO'},
+    {uf: 'MA'},
+    {uf: 'MT'},
+    {uf: 'MS'},
+    {uf: 'MG'},
+    {uf: 'PA'},
+    {uf: 'PB'},
+    {uf: 'PR'},
+    {uf: 'PE'},
+    {uf: 'PI'},
+    {uf: 'RJ'},
+    {uf: 'RN'},
+    {uf: 'RS'},
+    {uf: 'RO'},
+    {uf: 'RR'},
+    {uf: 'SC'},
+    {uf: 'SP'},
+    {uf: 'SE'},
+    {uf: 'TO'},
+]);
+const [selectedState, setSelectedState] = useState(null);
+
 
   useEffect(()=>{
     const callApiFindVotesByPresident = async()=>{
@@ -90,8 +70,7 @@ export default function TallyChartComponent() {
 
   useEffect(()=>{
     const callApiFindVotesByGov = async()=>{
-      const response = await findVotesByGov('rs');
-      console.log(response.data);
+      const response = await findVotesByGov(selectedState.uf);
       setDataGov(response.data);
     }
     try {
@@ -99,7 +78,20 @@ export default function TallyChartComponent() {
     } catch (error) {
       console.log(error);
     }
-  },[]);
+  },[selectedState]);
+  const defaultPropsState = {
+    options: stateOptions,
+    value: selectedState,
+    getOptionLabel: (option) => {
+        return option?.uf || '';
+    },
+    getOptionSelected: (option) => {
+        return option?.uf || '';
+    },
+    onChange: (event, newValue) => {
+        setSelectedState(newValue);
+    },
+};
   return (
     <><Grid
       container
@@ -135,7 +127,16 @@ export default function TallyChartComponent() {
       alignItems="center"
       justifyContent="center"
       style={{ minHeight: '60vh' }}>
-        <Typography level="body3" fontWeight="bold">Apuração para Governador - 2º turno - RS</Typography>
+        <Typography level="body3" fontWeight="bold">Apuração para Governador - 2º turno</Typography>
+        <Autocomplete
+                                    {...defaultPropsState}
+                                    margin="normal"
+                                    id="outlined-select-currency"
+                                    variant="outlined"
+                                    renderInput={(params) => (
+                                        <TextField {...params} variant="outlined" label="Estado"/>
+                                    )}
+                                />
 
         <BarChart
           width={500}
