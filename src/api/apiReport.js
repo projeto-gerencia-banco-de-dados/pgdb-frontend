@@ -3,15 +3,43 @@ import { apiUrl } from './api';
 
 export const createReport = async (data, auth, votos) => {
     try {
+        
         const response = await Axios.post(`${apiUrl}/boletim/save`, {
             zona: data.zona,
             secao: data.secao,
             aptos: data.aptos,
             faltosos: data.faltosos,
             usuario: {
-                id: auth.data.id
+                id: auth.id
             },
             votos: votos
+        });
+        console.log();
+        return response;
+    } catch (err) {
+        return {
+            error: true,
+            message: err,
+        };
+    }
+};
+
+export const findAllReports = async () => {
+    try {
+        const response = await Axios.get(`${apiUrl}/boletim/all`);
+        return response;
+    } catch (err) {
+        return {
+            error: true,
+            message: err,
+        };
+    }
+};
+
+export const validateReport = async (id) => {
+    try {
+        const response = await Axios.post(`${apiUrl}/boletim/validar`, {
+            id: id
         });
         
         return response;

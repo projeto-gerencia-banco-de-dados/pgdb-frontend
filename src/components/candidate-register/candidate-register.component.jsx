@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -14,6 +14,7 @@ import { Autocomplete } from '@material-ui/lab';
 import { Alert, FormControl } from '@mui/material';
 import { authContext } from '../../contexts/authContext';
 import { createCandidate } from '../../api/apiCandidate';
+import { findAllParties } from '../../api/apiParty';
 
 export default function CandidateRegisterComponent() {
     const { auth } = useContext(authContext);
@@ -52,6 +53,19 @@ export default function CandidateRegisterComponent() {
             setIsSuccess(true);
         }
     };
+
+    useEffect(() => {
+        const callApiFindAllParties = async () => {
+            const response = await findAllParties();
+
+            setPartyOptions(response.data);
+        }
+        try {
+            callApiFindAllParties();
+        } catch (error) {
+            
+        }
+    }, [auth]);
 
     const handleChangeNome = (e) => {
         const { value } = e.target;
